@@ -39,4 +39,7 @@ public abstract class Carambolage {
     public void setAccelGravit(double accelGravit) {
         this.accelGravit = accelGravit;
     }
+
+
+    public abstract void destructionDerby(double allo);
 }
