@@ -1,6 +1,6 @@
 package com.example.pigsgonewrong;
 
-public class Carambolage {
+public abstract class Carambolage {
 
     //Attributs
     private double angle;
