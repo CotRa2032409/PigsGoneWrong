@@ -1,11 +1,15 @@
 package com.example.pigsgonewrong;
 
+import java.awt.*;
+
 public class Menus {
 
     //Attributs
 
     //Méthodes
     public void play(){
+
+        Button play = new Button();
 
     }
 

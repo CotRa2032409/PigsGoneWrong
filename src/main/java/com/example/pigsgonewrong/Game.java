@@ -3,17 +3,20 @@ package com.example.pigsgonewrong;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 
-
+import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.RecordComponent;
+import java.util.RandomAccess;
 
 public class Game extends Application implements Runnable {
 
     private static boolean running = false;
     private static Thread thread;
+    GameObject object;
+
 
     public synchronized void start(Stage stage) throws IOException {
         if (running)
@@ -22,12 +25,14 @@ public class Game extends Application implements Runnable {
         running = true;
         thread = new Thread(this);
         thread.start();
-        Group root = new Group();
+        Rectangle test = new Rectangle();
+        Group root = new Group(test);
         Scene scene = new Scene(root);
         stage.setMaximized(true);
         stage.setTitle("Bad Piggies 3 Lite");
         stage.setResizable(false);
         stage.setScene(scene);
+
 
         stage.show();
     }
@@ -41,16 +46,14 @@ public class Game extends Application implements Runnable {
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
-        while(running) {
+        while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
             while (delta >= 1) {
-                tick();
                 updates++;
                 delta--;
             }
-            render();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
@@ -61,17 +64,9 @@ public class Game extends Application implements Runnable {
         }
     }
 
-    private void tick() {
-
-    }
-
-    private void render() {
-
-    }
 
     public static void main(String[] args) {
         launch();
     }
 }
-
 

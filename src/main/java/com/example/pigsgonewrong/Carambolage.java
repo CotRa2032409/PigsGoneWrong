@@ -8,12 +8,11 @@ public abstract class Carambolage {
     private double accelGravit = 9.8;
 
     public Carambolage(double angle, double vitesse, double accelGravit) {
-
         this.angle = angle;
         this.vitesse = vitesse;
         this.accelGravit = accelGravit;
-
     }
+
 
     //Méthodes
     public double getAngle() {
