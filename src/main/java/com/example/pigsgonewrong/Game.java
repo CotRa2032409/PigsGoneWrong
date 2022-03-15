@@ -5,17 +5,18 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.RandomAccess;
+import java.util.Collections;
 
 public class Game extends Application implements Runnable {
 
-    private static boolean running = false;
+
+    private GameObject object;
+    private Carambolage gravity;
+    private boolean closed;
     private static Thread thread;
-    GameObject object;
+    private static boolean running = false;
 
 
     public synchronized void start(Stage stage) throws IOException {
@@ -25,16 +26,18 @@ public class Game extends Application implements Runnable {
         running = true;
         thread = new Thread(this);
         thread.start();
-        Rectangle test = new Rectangle();
-        Group root = new Group(test);
+        Pieces pieces = new Pieces();
+        pieces.cochon();
+        object = new GameObject(50, 50, pieces);
+        Rectangle test = new Rectangle(32, 64);
+        Group root = new Group(Pieces.getTest());
         Scene scene = new Scene(root);
         stage.setMaximized(true);
         stage.setTitle("Bad Piggies 3 Lite");
         stage.setResizable(false);
         stage.setScene(scene);
-
-
         stage.show();
+        stage.setOnCloseRequest(ae -> thread.stop());
     }
 
     @Override

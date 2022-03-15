@@ -1,14 +1,12 @@
 package com.example.pigsgonewrong;
 
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-
-public class Pieces {
+public class Pieces extends GameObject {
 
     //Attributs
     private double masse;
@@ -16,37 +14,75 @@ public class Pieces {
     private boolean activable;
     private Polygon hitbox;
     public static Group test = new Group();
+    protected static Thread thread;
 
-    //Méthodes
-    public void boite() {
-
-        Rectangle boiteFibre = new Rectangle(50, 50, 50, 50);
-        boiteFibre.setStrokeWidth(20);
-        boiteFibre.setStroke(Color.BLACK);
-
-        Rectangle boiteBois = new Rectangle(50, 50, 50, 50);
-        boiteBois.setStrokeWidth(20);
-        boiteBois.setStroke(Color.BROWN);
-
-        Rectangle boiteMetal = new Rectangle(50, 50, 50, 50);
-        boiteMetal.setStrokeWidth(20);
-        boiteMetal.setStroke(Color.GRAY);
+    public Pieces() {
 
     }
 
-    public static void cochon() {
 
-        Circle baseCochon = new Circle(50,50, 50, Color.GREENYELLOW);
-        Circle nezCochon = new Circle(50, 50, 50);
+    //Méthodes
+    public void boiteBois() {
+        Rectangle boiteBois = new Rectangle(50, 50, 50, 50);
+        boiteBois.setStrokeWidth(20);
+        boiteBois.setStroke(Color.BROWN);
+        masse = 2;
+    }
 
+    public void boiteFibre() {
+        Rectangle boiteFibre = new Rectangle(50, 50, 50, 50);
+        boiteFibre.setStrokeWidth(20);
+        boiteFibre.setStroke(Color.BLACK);
+        masse = 1;
+    }
+
+    public void boiteMetal() {
+        Rectangle boiteMetal = new Rectangle(50, 50, 50, 50);
+        boiteMetal.setStrokeWidth(20);
+        boiteMetal.setStroke(Color.GRAY);
+        masse = 3;
+    }
+
+    public void cochon() {
+        //Mettre imageView içi
+        Circle baseCochon = new Circle(50, Color.GREENYELLOW);
+        Circle nezCochon = new Circle(50);
+        getBounds(50);
+        test.getChildren().add(baseCochon);
+        setMasse(0.5);
     }
 
     public void roue() {
 
     }
 
-    public Circle getBounds() {
-        return new Circle(50, 50,50, Color.GREENYELLOW);
+    public static Circle getBounds(float rayon) {
+        Circle hitbox = new Circle(50);
+        hitbox.setStroke(Color.TRANSPARENT);
+        return hitbox;
     }
 
+    public void gravityTesting() {
+
+    }
+
+    public static Group getTest() {
+        return test;
+    }
+
+    public double getMasse() {
+        return masse;
+    }
+
+    public void setMasse(double masse) {
+        this.masse = masse;
+    }
+
+    public double getResistance() {
+        return resistance;
+    }
+
+    public void setResistance(double resistance) {
+        this.resistance = resistance;
+    }
 }

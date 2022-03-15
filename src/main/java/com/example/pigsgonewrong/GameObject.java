@@ -1,15 +1,18 @@
 package com.example.pigsgonewrong;
 
-public abstract class GameObject {
+public class GameObject extends Game {
     protected float x, y;
     protected Pieces pieces;
-    protected float velx = 0, vely = 0;
-
+    protected float velX = 0, velY = 0;
+    protected boolean tomber = true;
 
     public GameObject(float x, float y, Pieces pieces) {
         this.x = x;
         this.y = y;
         this.pieces = pieces;
+    }
+
+    public GameObject() {
     }
 
 
@@ -29,19 +32,21 @@ public abstract class GameObject {
         this.y = y;
     }
 
-    public float getVelx() {
-        return velx;
+    public float getVelX() {
+        return velX;
     }
 
-    public void setVelx(float velx) {
-        this.velx = velx;
+    public void setVelX(float velX) {
+        this.velX = velX;
     }
 
-    public float getVely() {
-        return vely;
+    public float getVelY() {
+        return velY;
     }
 
-    public void setVely(float vely) {
-        this.vely = vely;
+    public void setVelY(float velY) {
+        this.velY = velY;
     }
+
+
 }
