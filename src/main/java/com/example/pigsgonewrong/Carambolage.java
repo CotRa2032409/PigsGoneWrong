@@ -1,6 +1,12 @@
 package com.example.pigsgonewrong;
 
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
+
 import java.util.List;
+
 
 public abstract class Carambolage extends Pieces implements Runnable {
 
@@ -10,15 +16,15 @@ public abstract class Carambolage extends Pieces implements Runnable {
     private double accelGravit = -9.8;
     private static double masse;
 
+
     public Carambolage(double angle, double vitesse, double accelGravit) {
+        super();
         this.angle = angle;
         this.vitesse = vitesse;
         this.accelGravit = accelGravit;
     }
 
-    public Carambolage() {
 
-    }
 
     public void calculVitesse(List<Pieces> pieces) {
         double masseTout = 0;
@@ -33,14 +39,9 @@ public abstract class Carambolage extends Pieces implements Runnable {
 
     @Override
     public void run() {
-        vitesse = masse * -9.8;
-        System.out.println(vitesse);
-    }
-
-    public void calculVitesse(Pieces pieces) {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.INDEFINITE, cochon());
 
     }
-
 
     //Méthodes
     public double getAngle() {
