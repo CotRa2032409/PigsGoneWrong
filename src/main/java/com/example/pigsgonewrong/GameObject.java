@@ -15,7 +15,6 @@ public class GameObject extends Game {
     public GameObject() {
     }
 
-
     public float getX() {
         return x;
     }

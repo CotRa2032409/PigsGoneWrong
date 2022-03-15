@@ -1,6 +1,4 @@
 module com.example.pigsgonewrong {
-    requires java.datatransfer;
-    requires java.desktop;
     requires javafx.controls;
     requires javafx.fxml;
         requires javafx.web;

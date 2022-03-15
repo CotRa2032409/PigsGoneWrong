@@ -16,6 +16,10 @@ public class Pieces extends GameObject {
     public static Group test = new Group();
     protected static Thread thread;
 
+    public Pieces(float x, float y, Pieces pieces) {
+        super(x, y, pieces);
+    }
+
     public Pieces() {
 
     }
@@ -43,13 +47,14 @@ public class Pieces extends GameObject {
         masse = 3;
     }
 
-    public void cochon() {
+    public Circle cochon() {
         //Mettre imageView içi
         Circle baseCochon = new Circle(50, Color.GREENYELLOW);
         Circle nezCochon = new Circle(50);
         getBounds(50);
-        test.getChildren().add(baseCochon);
+
         setMasse(0.5);
+        return baseCochon;
     }
 
     public void roue() {

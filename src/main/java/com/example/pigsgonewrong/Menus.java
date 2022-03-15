@@ -1,6 +1,7 @@
 package com.example.pigsgonewrong;
 
-import java.awt.*;
+
+import javafx.scene.control.Button;
 
 public class Menus {
 
