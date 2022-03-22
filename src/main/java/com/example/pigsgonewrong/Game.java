@@ -1,41 +1,53 @@
 package com.example.pigsgonewrong;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends Application implements Runnable {
 
 
-    private GameObject object;
-    private Carambolage gravity;
+    private Carambolage gravity = new Carambolage();
     private boolean closed;
     private static Thread thread;
     private static boolean running = false;
 
 
     public synchronized void start(Stage stage) throws IOException {
+        stage.setMaximized(true);
+        stage.setTitle("Bad Piggies 3 Lite");
+        stage.setResizable(false);
         if (running)
             return;
 
         running = true;
         thread = new Thread(this);
         thread.start();
-        //Pieces pieces = new Pieces();
-        //pieces.cochon();
-        //object = new GameObject(50, 50, pieces);
+
+        List<ImageView> allo = new ArrayList<>();
+
+        Pieces pieces = Pieces.cochon();
+        allo.add(pieces);
+
         Rectangle test = new Rectangle(32, 64);
-        Group root = new Group(Pieces.getTest());
+        GridPane gridPane = new GridPane();
+        gridPane.add(allo.get(0), 0, 0);
+        Group root = new Group(gridPane);
+        pieces.setScaleX(0.2);
+        pieces.setScaleY(0.2);
+
+        gravity.addToList(pieces);
+        gravity.calculVitesse(gravity.getPiecesList());
         Scene scene = new Scene(root);
-        stage.setMaximized(true);
-        stage.setTitle("Bad Piggies 3 Lite");
-        stage.setResizable(false);
+
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(ae -> thread.stop());

@@ -1,20 +1,24 @@
 package com.example.pigsgonewrong;
 
-import javafx.animation.KeyValue;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class Carambolage extends Pieces implements Runnable {
+public class Carambolage implements Runnable {
 
     //Attributs
     private double angle;
     private double vitesse;
+    private double vitesseMax = 100;
     private double accelGravit = -9.8;
     private static double masse;
+    private List<ImageView> piecesList = new ArrayList<>();
+    private Thread thread;
 
 
     public Carambolage(double angle, double vitesse, double accelGravit) {
@@ -24,24 +28,37 @@ public abstract class Carambolage extends Pieces implements Runnable {
         this.accelGravit = accelGravit;
     }
 
+    public Carambolage() {
+
+    }
 
 
-    public void calculVitesse(List<Pieces> pieces) {
+    public void calculVitesse(List<ImageView> pieces) {
         double masseTout = 0;
-        for (int i = 0; i < pieces.size(); i++) {
+        pieces = piecesList;
+        vitesse = 0;
+        /*for (int i = 0; i < pieces.size(); i++) {
             masseTout += pieces.get(i).getMasse();
-        }
+        }*/
 
         masse = masseTout;
         thread = new Thread(this);
         thread.start();
     }
 
+
     @Override
     public void run() {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.INDEFINITE, cochon());
+
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ae -> {
+            vitesse -= 9.8;
+            System.err.println(vitesse);
+        }));
+
 
     }
+
 
     //Méthodes
     public double getAngle() {
@@ -68,6 +85,16 @@ public abstract class Carambolage extends Pieces implements Runnable {
         this.accelGravit = accelGravit;
     }
 
+    public List<ImageView> getPiecesList() {
+        return piecesList;
+    }
 
-    public abstract void destructionDerby(double allo);
+    public void addToList(ImageView pieces) {
+        piecesList.add(pieces);
+    }
+
+    public void removeFromList(ImageView pieces) {
+        piecesList.remove(pieces);
+    }
+
 }

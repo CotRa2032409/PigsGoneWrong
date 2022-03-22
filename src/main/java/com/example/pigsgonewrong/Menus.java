@@ -8,17 +8,17 @@ public class Menus {
     //Attributs
 
     //Méthodes
-    public void play(){
+    public void play() {
 
         Button play = new Button();
 
     }
 
-    public void level1(){
+    public void level1() {
 
     }
 
-    public void activePiece(){
+    public void activePiece() {
 
     }
 
