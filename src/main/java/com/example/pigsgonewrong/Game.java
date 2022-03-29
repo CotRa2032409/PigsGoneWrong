@@ -1,5 +1,6 @@
 package com.example.pigsgonewrong;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ public class Game extends Application implements Runnable {
     private boolean closed;
     private static Thread thread;
     private static boolean running = false;
+    private boolean tomber = false;
 
 
     public synchronized void start(Stage stage) throws IOException {
@@ -46,6 +48,7 @@ public class Game extends Application implements Runnable {
 
         gravity.addToList(pieces);
         gravity.calculVitesse(gravity.getPiecesList());
+        gravity.transition(gravity.getPiecesList());
         Scene scene = new Scene(root);
 
         stage.setScene(scene);

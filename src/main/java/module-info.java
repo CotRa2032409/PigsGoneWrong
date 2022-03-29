@@ -9,7 +9,8 @@ module com.example.pigsgonewrong {
             requires org.kordamp.ikonli.javafx;
             requires org.kordamp.bootstrapfx.core;
             requires eu.hansolo.tilesfx;
-    
+    requires kotlin.stdlib;
+
     opens com.example.pigsgonewrong to javafx.fxml;
     exports com.example.pigsgonewrong;
 }

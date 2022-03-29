@@ -12,13 +12,12 @@ public class Pieces extends ImageView {
     private static double masse;
     private double resistance;
     private boolean activable;
-    private ImageView pieces;
 
 
     public static Group test = new Group();
 
-    public Pieces(ImageView pieces) {
-        this.pieces = pieces;
+    public Pieces(String urlImage) {
+        super(urlImage);
     }
 
     //Méthodes
@@ -45,7 +44,7 @@ public class Pieces extends ImageView {
 
     public static Pieces cochon() {
         //Mettre imageView içi
-        Pieces cochon = new Pieces(new ImageView("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
+        Pieces cochon = new Pieces("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png");
 
         return cochon;
     }

@@ -1,7 +1,9 @@
 package com.example.pigsgonewrong;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -11,21 +13,22 @@ import java.util.List;
 
 public class Carambolage implements Runnable {
 
+
     //Attributs
     private double angle;
     private double vitesse;
     private double vitesseMax = 100;
-    private double accelGravit = -9.8;
+    private double vitesseVerticale = 0;
     private static double masse;
+    private boolean tomber = true;
     private List<ImageView> piecesList = new ArrayList<>();
     private Thread thread;
 
 
-    public Carambolage(double angle, double vitesse, double accelGravit) {
+    public Carambolage(double angle, double vitesse) {
         super();
         this.angle = angle;
         this.vitesse = vitesse;
-        this.accelGravit = accelGravit;
     }
 
     public Carambolage() {
@@ -49,16 +52,30 @@ public class Carambolage implements Runnable {
 
     @Override
     public void run() {
-
-
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ae -> {
-            vitesse -= 9.8;
-            System.err.println(vitesse);
-        }));
+            if (tomber) {
+                vitesseVerticale = vitesseVerticale + 9.8 * 0.5;
+            }
 
+            vitesseVerticale = Math.min(vitesseMax, vitesseVerticale);
+            System.err.println(vitesseVerticale);
+            transition(piecesList);
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
     }
 
+    public void transition(List<ImageView> piecesList) {
+        for (int i = 0; i < piecesList.size(); i++) {
+            TranslateTransition transition = new TranslateTransition(Duration.millis(500), piecesList.get(i));
+            transition.setInterpolator(Interpolator.LINEAR);
+            transition.setByY(vitesseVerticale);
+            transition.setCycleCount(1);
+            transition.play();
+        }
+
+    }
 
     //Méthodes
     public double getAngle() {
@@ -75,14 +92,6 @@ public class Carambolage implements Runnable {
 
     public void setVitesse(double vitesse) {
         this.vitesse = vitesse;
-    }
-
-    public double getAccelGravit() {
-        return accelGravit;
-    }
-
-    public void setAccelGravit(double accelGravit) {
-        this.accelGravit = accelGravit;
     }
 
     public List<ImageView> getPiecesList() {
