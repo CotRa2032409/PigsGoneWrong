@@ -1,6 +1,5 @@
 package com.example.pigsgonewrong;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,12 +14,10 @@ import java.util.List;
 
 public class Game extends Application implements Runnable {
 
-
     private Carambolage gravity = new Carambolage();
-    private boolean closed;
     private static Thread thread;
     private static boolean running = false;
-    private boolean tomber = false;
+    protected NextGen nextGen;
 
 
     public synchronized void start(Stage stage) throws IOException {
@@ -35,11 +32,14 @@ public class Game extends Application implements Runnable {
         thread.start();
 
         List<ImageView> allo = new ArrayList<>();
+        nextGen = new NextGen();
+        nextGen.createTerrain();
 
         Pieces pieces = Pieces.cochon();
         allo.add(pieces);
 
-        Rectangle test = new Rectangle(32, 64);
+        gravity.setTomber(false);
+
         GridPane gridPane = new GridPane();
         gridPane.add(allo.get(0), 0, 0);
         Group root = new Group(gridPane);
@@ -83,7 +83,6 @@ public class Game extends Application implements Runnable {
             }
         }
     }
-
 
     public static void main(String[] args) {
         launch();

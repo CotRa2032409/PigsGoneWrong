@@ -23,7 +23,6 @@ public class HelloApplication extends Application {
 
         Rectangle rectangle = new Rectangle(100, 50);
 
-        Vector vector = new Vector(0, 9.8);
 
         TranslateTransition test = new TranslateTransition(Duration.seconds(5), rectangle);
         test.setByY(500);
@@ -42,49 +41,3 @@ public class HelloApplication extends Application {
     }
 }
 
-class Vector {
-    private double x;
-    private double y;
-
-    public Vector(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public Vector() {
-
-    }
-
-    public void setVector(double x, double y) {
-
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-}
-
-class Gravity {
-    public Vector gravityAcceleration(Vector projectile) {
-        double x = 0;
-        double y = 9.8;
-
-        Vector gravity = new Vector();
-
-        gravity.setVector(x, y);             //setVector is in PhysicsVector class and makes vector
-
-        return gravity;
-    }
-}

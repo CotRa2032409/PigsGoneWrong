@@ -4,30 +4,30 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import kotlin.math.MathKt;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Carambolage implements Runnable {
-
 
     //Attributs
     private double angle;
     private double vitesse;
-    private double vitesseMax = 100;
+    private final double consAccel = 4.9;
+    private final double vitesseMax = 100;
     private double vitesseVerticale = 0;
-    private static double masse;
+    private double vitesseHorizontale = 0;
+    private double masse;
     private boolean tomber = true;
     private List<ImageView> piecesList = new ArrayList<>();
     private Thread thread;
 
-
-    public Carambolage(double angle, double vitesse) {
-        super();
-        this.angle = angle;
+    //Méthodes
+    public Carambolage(double vitesse) {
         this.vitesse = vitesse;
     }
 
@@ -35,10 +35,9 @@ public class Carambolage implements Runnable {
 
     }
 
-
-    public void calculVitesse(List<ImageView> pieces) {
+    public void calculVitesse(List<ImageView> piecesList) {
         double masseTout = 0;
-        pieces = piecesList;
+        this.piecesList = piecesList;
         vitesse = 0;
         /*for (int i = 0; i < pieces.size(); i++) {
             masseTout += pieces.get(i).getMasse();
@@ -49,16 +48,20 @@ public class Carambolage implements Runnable {
         thread.start();
     }
 
-
     @Override
     public void run() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ae -> {
             if (tomber) {
-                vitesseVerticale = vitesseVerticale + 9.8 * 0.5;
+                vitesseVerticale += consAccel;
+            } else {
+                NextGen nextGen = new NextGen();
+                nextGen.createTerrain();
+                vitesse += (consAccel * Math.sin(nextGen.getCinq().getRotate())) * -1;
+                vitesseHorizontale = (vitesse * Math.cos(nextGen.getCinq().getRotate())) * -1;
+                vitesseVerticale = (vitesse * Math.sin(nextGen.getCinq().getRotate())) * -1;
             }
-
             vitesseVerticale = Math.min(vitesseMax, vitesseVerticale);
-            System.err.println(vitesseVerticale);
+
             transition(piecesList);
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -70,14 +73,13 @@ public class Carambolage implements Runnable {
         for (int i = 0; i < piecesList.size(); i++) {
             TranslateTransition transition = new TranslateTransition(Duration.millis(500), piecesList.get(i));
             transition.setInterpolator(Interpolator.LINEAR);
+            transition.setByX(vitesseHorizontale);
             transition.setByY(vitesseVerticale);
             transition.setCycleCount(1);
             transition.play();
         }
-
     }
 
-    //Méthodes
     public double getAngle() {
         return angle;
     }
@@ -106,4 +108,15 @@ public class Carambolage implements Runnable {
         piecesList.remove(pieces);
     }
 
+    public void setTomber(boolean tomber) {
+        this.tomber = tomber;
+    }
+
+    public double getVitesseHorizontale() {
+        return vitesseHorizontale;
+    }
+
+    public void setVitesseHorizontale(double vitesseHorizontale) {
+        this.vitesseHorizontale = vitesseHorizontale;
+    }
 }

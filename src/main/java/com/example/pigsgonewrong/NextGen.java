@@ -1,22 +1,34 @@
 package com.example.pigsgonewrong;
 
-import javafx.scene.shape.Polygon;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NextGen {
 
     //Attributs
-    private Polygon terre;
-    private Polygon pierre;
+    private Rectangle cinq;
+
 
     //Méthodes
+    public NextGen() {
+        cinq = new Rectangle(855, 520, 220, 5);
+    }
 
-    public void forgetMeNow(Polygon polygon){
+    public void createTerrain() {
+        cinq.setRotate(35);
+        cinq.setFill(Color.BLUE);
 
     }
 
-    public void stompy(Polygon polygon){
-
+    public Rectangle getCinq() {
+        return cinq;
     }
 
+    public void setCinq(Rectangle cinq) {
+        this.cinq = cinq;
+    }
 
 }
