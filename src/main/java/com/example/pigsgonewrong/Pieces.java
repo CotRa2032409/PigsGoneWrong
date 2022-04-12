@@ -12,12 +12,15 @@ public class Pieces extends ImageView {
     private static double masse;
     private double resistance;
     private boolean activable;
-
-
-    public static Group test = new Group();
+    private boolean conteneur;
+    private boolean contenu;
 
     public Pieces(String urlImage) {
         super(urlImage);
+    }
+
+    public Pieces() {
+
     }
 
     //Méthodes
@@ -26,31 +29,47 @@ public class Pieces extends ImageView {
         boiteBois.setStrokeWidth(20);
         boiteBois.setStroke(Color.BROWN);
         masse = 1.5;
+        resistance = 2;
+        conteneur = true;
     }
 
-    public static void boiteFibre() {
+    public void boiteFibre() {
         Rectangle boiteFibre = new Rectangle(50, 50, 50, 50);
         boiteFibre.setStrokeWidth(20);
         boiteFibre.setStroke(Color.BLACK);
         masse = 1;
+        resistance = 1;
+        conteneur = true;
     }
 
-    public static void boiteMetal() {
+    public void boiteMetal() {
         Rectangle boiteMetal = new Rectangle(50, 50, 50, 50);
         boiteMetal.setStrokeWidth(20);
         boiteMetal.setStroke(Color.GRAY);
         masse = 3;
+        resistance = 3;
+        conteneur = true;
     }
 
-    public static Pieces cochon() {
+    public Pieces cochon() {
         //Mettre imageView içi
         Pieces cochon = new Pieces("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png");
-
+        masse = 0.5;
+        contenu = true;
         return cochon;
     }
 
     public void roue() {
 
+        masse = 1;
+        resistance = 2;
+    }
+
+    public void moteur() {
+
+        masse = 2.5;
+        activable = true;
+        contenu = true;
     }
 
     public double getMasse() {

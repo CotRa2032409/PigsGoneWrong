@@ -3,7 +3,6 @@ package com.example.pigsgonewrong;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NextGen {
@@ -21,6 +20,11 @@ public class NextGen {
         cinq.setRotate(35);
         cinq.setFill(Color.BLUE);
 
+    }
+
+    public List<Rectangle> dataminer() {    //Reference à Binding of Isaac, crée les hitbox du sol
+
+        return null;
     }
 
     public Rectangle getCinq() {

@@ -10,17 +10,44 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Minecraft {
+public class Minecraft extends Pieces implements Runnable {
 
     //Attributs
-    private ArrayList crafting;
+    private ArrayList<javafx.scene.Node> crafting;
     private GridPane craftingTable;
     private Map inventory;
+    private final double constanteResis = 40;
+    private boolean piecesCollees;
+    private Thread thread;
+    private NextGen nextGen;
+
+    public Minecraft() {
+        super();
+
+    }
 
     //Méthodes
     public void coller() {
-
+        craftingTable = new GridPane();
+        crafting = new ArrayList();
+        crafting.addAll(craftingTable.getChildren());
+        piecesCollees = true;
     }
+
+    public void breakingBad() { //Destruction du véhicule
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    @Override
+    public void run() {
+        double comboBreaker = constanteResis * getResistance();
+        if ((carambolage.getVitesseHorizontale() > comboBreaker) || (carambolage.getVitesseVerticale() > comboBreaker)) {
+            piecesCollees = false;
+
+        }
+    }
+
 
     //dies
     public void afficherGrille() {
@@ -101,4 +128,6 @@ public class Minecraft {
             });
         }
     }
+
+
 }

@@ -4,10 +4,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import kotlin.math.MathKt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ public class Carambolage implements Runnable {
     private double angle;
     private double vitesse;
     private final double consAccel = 4.9;
-    private final double vitesseMax = 100;
+    private final double vitesseMax = 150;
     private double vitesseVerticale = 0;
     private double vitesseHorizontale = 0;
     private double masse;
@@ -118,5 +116,13 @@ public class Carambolage implements Runnable {
 
     public void setVitesseHorizontale(double vitesseHorizontale) {
         this.vitesseHorizontale = vitesseHorizontale;
+    }
+
+    public double getVitesseVerticale() {
+        return vitesseVerticale;
+    }
+
+    public void setVitesseVerticale(double vitesseVerticale) {
+        this.vitesseVerticale = vitesseVerticale;
     }
 }

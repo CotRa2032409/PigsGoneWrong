@@ -5,7 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,18 +34,20 @@ public class Game extends Application implements Runnable {
         nextGen = new NextGen();
         nextGen.createTerrain();
 
-        Pieces pieces = Pieces.cochon();
-        allo.add(pieces);
+        Pieces piece = new Pieces();
+        piece.cochon();
+        allo.add(piece);
+
 
         gravity.setTomber(false);
 
         GridPane gridPane = new GridPane();
         gridPane.add(allo.get(0), 0, 0);
         Group root = new Group(gridPane);
-        pieces.setScaleX(0.2);
-        pieces.setScaleY(0.2);
+        piece.setScaleX(0.2);
+        piece.setScaleY(0.2);
 
-        gravity.addToList(pieces);
+        gravity.addToList(piece);
         gravity.calculVitesse(gravity.getPiecesList());
         gravity.transition(gravity.getPiecesList());
         Scene scene = new Scene(root);
