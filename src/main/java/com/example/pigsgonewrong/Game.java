@@ -37,7 +37,12 @@ public class Game extends Application implements Runnable {
         Pieces piece = new Pieces();
         piece.cochon();
         allo.add(piece);
+        Pieces piece2 = new Pieces();
+        piece2.boiteBois();
 
+
+        Minecraft collePieces = new Minecraft();
+        collePieces.pokeBall(piece, piece2);
 
         gravity.setTomber(false);
 

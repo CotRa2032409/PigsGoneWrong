@@ -1,6 +1,6 @@
 package com.example.pigsgonewrong;
 
-import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -9,7 +9,7 @@ public class Pieces extends ImageView {
 
     //Attributs
     protected Carambolage carambolage;
-    private static double masse;
+    private double masse;
     private double resistance;
     private boolean activable;
     private boolean conteneur;
@@ -20,17 +20,16 @@ public class Pieces extends ImageView {
     }
 
     public Pieces() {
-
     }
 
     //Méthodes
     public void boiteBois() {
-        Rectangle boiteBois = new Rectangle(50, 50, 50, 50);
-        boiteBois.setStrokeWidth(20);
-        boiteBois.setStroke(Color.BROWN);
+        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
         masse = 1.5;
         resistance = 2;
-        conteneur = true;
+        setConteneur(true);
+        setContenu(false);
+
     }
 
     public void boiteFibre() {
@@ -39,24 +38,22 @@ public class Pieces extends ImageView {
         boiteFibre.setStroke(Color.BLACK);
         masse = 1;
         resistance = 1;
-        conteneur = true;
+        setConteneur(true);
     }
 
     public void boiteMetal() {
-        Rectangle boiteMetal = new Rectangle(50, 50, 50, 50);
-        boiteMetal.setStrokeWidth(20);
-        boiteMetal.setStroke(Color.GRAY);
+        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
         masse = 3;
         resistance = 3;
-        conteneur = true;
+        setConteneur(true);
     }
 
-    public Pieces cochon() {
+    public void cochon() {
         //Mettre imageView içi
-        Pieces cochon = new Pieces("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png");
+        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
         masse = 0.5;
-        contenu = true;
-        return cochon;
+        setContenu(true);
+        setConteneur(false);
     }
 
     public void roue() {
@@ -77,7 +74,7 @@ public class Pieces extends ImageView {
     }
 
     public void setMasse(double masse) {
-        Pieces.masse = masse;
+        this.masse = masse;
     }
 
     public double getResistance() {
@@ -86,5 +83,29 @@ public class Pieces extends ImageView {
 
     public void setResistance(double resistance) {
         this.resistance = resistance;
+    }
+
+    public boolean isActivable() {
+        return activable;
+    }
+
+    public void setActivable(boolean activable) {
+        this.activable = activable;
+    }
+
+    public boolean isConteneur() {
+        return conteneur;
+    }
+
+    public void setConteneur(boolean conteneur) {
+        this.conteneur = conteneur;
+    }
+
+    public boolean isContenu() {
+        return contenu;
+    }
+
+    public void setContenu(boolean contenu) {
+        this.contenu = contenu;
     }
 }

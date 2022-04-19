@@ -71,7 +71,6 @@ public class Carambolage implements Runnable {
         for (int i = 0; i < piecesList.size(); i++) {
             TranslateTransition transition = new TranslateTransition(Duration.millis(500), piecesList.get(i));
             transition.setInterpolator(Interpolator.LINEAR);
-            transition.setByX(vitesseHorizontale);
             transition.setByY(vitesseVerticale);
             transition.setCycleCount(1);
             transition.play();

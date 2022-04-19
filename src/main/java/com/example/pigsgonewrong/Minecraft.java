@@ -1,5 +1,7 @@
 package com.example.pigsgonewrong;
 
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -8,34 +10,63 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Minecraft extends Pieces implements Runnable {
 
     //Attributs
     private ArrayList<javafx.scene.Node> crafting;
     private GridPane craftingTable;
-    private Map inventory;
     private final double constanteResis = 40;
     private boolean piecesCollees;
-    private Thread thread;
-    private NextGen nextGen;
+    private Group stickyPiston = new Group();
 
     public Minecraft() {
         super();
-
     }
 
     //Méthodes
     public void coller() {
-        craftingTable = new GridPane();
-        crafting = new ArrayList();
         crafting.addAll(craftingTable.getChildren());
-        piecesCollees = true;
+        Node node1 = null;
+        Node node2 = null;
+
+        //Java est cave!!
+        Integer colIndex1 = null;
+        Integer rowIndex1 = null;
+        Integer colIndex2 = null;
+        Integer rowIndex2 = null;
+        for (Integer i = 0; i < craftingTable.getChildren().size(); i++) {
+            if (i % 2 == 0) {
+                node1 = craftingTable.getChildren().get(i);
+                colIndex1 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
+                rowIndex1 = GridPane.getRowIndex(craftingTable.getChildren().get(i));
+            } else if (node1 == null) {
+                node1 = craftingTable.getChildren().get(i);
+            }
+            if (i % 2 != 0) {
+                node2 = craftingTable.getChildren().get(i);
+                colIndex2 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
+                rowIndex2 = GridPane.getRowIndex(craftingTable.getChildren().get(i));
+            }
+            if (node1 != null && node2 != null) {
+                if (colIndex2.equals(colIndex1 + 1) && rowIndex2.equals(rowIndex1)) {
+                    stickyPiston.getChildren().addAll(node1, node2);
+                } else if (rowIndex2.equals(rowIndex1 + 1) & colIndex2.equals(colIndex1)) {
+                    stickyPiston.getChildren().addAll(node1, node2);
+                }
+            }
+        }
+        piecesCollees = true; //Ready to go!
+    }
+
+    public void pokeBall(Pieces piece1, Pieces piece2) { //Fonctionne plus ou moins comme une Pokeball (un conteneur contient un contenu)
+        if ((piece1.isConteneur() && piece2.isContenu()) || (piece1.isContenu() && piece2.isConteneur())) {
+            setStickyPiston(new Group(piece1, piece2));
+        }
     }
 
     public void breakingBad() { //Destruction du véhicule
-        thread = new Thread(this);
+        Thread thread = new Thread(this);
         thread.start();
     }
 
@@ -44,10 +75,8 @@ public class Minecraft extends Pieces implements Runnable {
         double comboBreaker = constanteResis * getResistance();
         if ((carambolage.getVitesseHorizontale() > comboBreaker) || (carambolage.getVitesseVerticale() > comboBreaker)) {
             piecesCollees = false;
-
         }
     }
-
 
     //dies
     public void afficherGrille() {
@@ -129,5 +158,27 @@ public class Minecraft extends Pieces implements Runnable {
         }
     }
 
+    public Group getStickyPiston() {
+        return stickyPiston;
+    }
 
+    public void setStickyPiston(Group stickyPiston) {
+        this.stickyPiston = stickyPiston;
+    }
+
+    public ArrayList<Node> getCrafting() {
+        return crafting;
+    }
+
+    public void setCrafting(ArrayList<Node> crafting) {
+        this.crafting = crafting;
+    }
+
+    public GridPane getCraftingTable() {
+        return craftingTable;
+    }
+
+    public void setCraftingTable(GridPane craftingTable) {
+        this.craftingTable = craftingTable;
+    }
 }
