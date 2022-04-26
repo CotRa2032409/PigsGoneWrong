@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class Minecraft extends Pieces implements Runnable {
+public class Minecraft extends Pieces implements Runnable { //Gère la zone de construction du véhicule
 
     //Attributs
     private ArrayList<javafx.scene.Node> crafting;
@@ -35,7 +35,7 @@ public class Minecraft extends Pieces implements Runnable {
         Integer rowIndex1 = null;
         Integer colIndex2 = null;
         Integer rowIndex2 = null;
-        for (Integer i = 0; i < craftingTable.getChildren().size(); i++) {
+        for (int i = 0; i < craftingTable.getChildren().size(); i++) {
             if (i % 2 == 0) { //Vérification de la node1
                 node1 = craftingTable.getChildren().get(i);
                 colIndex1 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
@@ -138,9 +138,7 @@ public class Minecraft extends Pieces implements Runnable {
                 content.putImage(temp.getImage());
                 dragboard.setContent(content);
             });
-            temp.setOnDragOver((ae) -> {
-                ae.acceptTransferModes(TransferMode.MOVE);
-            });
+            temp.setOnDragOver((ae) -> ae.acceptTransferModes(TransferMode.MOVE));
             temp.setOnDragDropped(ae -> {
                 ImageView source = (ImageView) ae.getGestureSource();
                 Image imageSource = source.getImage();

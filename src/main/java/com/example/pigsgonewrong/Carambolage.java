@@ -21,7 +21,6 @@ public class Carambolage implements Runnable {
     private double vitesseHorizontale = 0;
     private boolean tomber = true;
     private List<ImageView> piecesList = new ArrayList<>();
-    private Thread thread;
 
     //Méthodes
     public Carambolage(double vitesse) {
@@ -35,7 +34,7 @@ public class Carambolage implements Runnable {
     public void calculVitesse(List<ImageView> piecesList) {
         this.piecesList = piecesList;
         vitesse = 0;
-        thread = new Thread(this);
+        Thread thread = new Thread(this);
         thread.start();
     }
 
@@ -47,7 +46,6 @@ public class Carambolage implements Runnable {
                 vitesseVerticale += consAccel;
 
             } else {
-
                 vitesse += (consAccel * Math.sin(nextGen.getCinq().getRotate()));
                 vitesseHorizontale = (vitesse * Math.cos(nextGen.getCinq().getRotate()));
                 vitesseVerticale = (vitesse * Math.sin(nextGen.getCinq().getRotate()));
