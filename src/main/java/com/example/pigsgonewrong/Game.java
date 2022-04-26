@@ -13,10 +13,11 @@ import java.util.List;
 
 public class Game extends Application implements Runnable {
 
-    private Carambolage gravity = new Carambolage();
+    private final Carambolage gravity = new Carambolage();
     private static Thread thread;
     private static boolean running = false;
     protected NextGen nextGen;
+    private int niveau; //1, 2 ou 3
 
 
     public synchronized void start(Stage stage) throws IOException {
@@ -32,7 +33,6 @@ public class Game extends Application implements Runnable {
 
         List<ImageView> allo = new ArrayList<>();
         nextGen = new NextGen();
-        nextGen.createTerrain();
 
         Pieces piece = new Pieces();
         piece.cochon();
@@ -53,14 +53,14 @@ public class Game extends Application implements Runnable {
         piece.setScaleY(0.2);
 
         gravity.addToList(piece);
+        gravity.addToList(piece2);
         gravity.calculVitesse(gravity.getPiecesList());
-        gravity.transition(gravity.getPiecesList());
+
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(ae -> thread.stop());
-
     }
 
     @Override

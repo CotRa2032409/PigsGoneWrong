@@ -15,11 +15,10 @@ public class Carambolage implements Runnable {
     //Attributs
     private double angle;
     private double vitesse;
-    private final double consAccel = 4.9;
+    private final double consAccel = 1.96;
     private final double vitesseMax = 150;
     private double vitesseVerticale = 0;
     private double vitesseHorizontale = 0;
-    private double masse;
     private boolean tomber = true;
     private List<ImageView> piecesList = new ArrayList<>();
     private Thread thread;
@@ -34,33 +33,28 @@ public class Carambolage implements Runnable {
     }
 
     public void calculVitesse(List<ImageView> piecesList) {
-        double masseTout = 0;
         this.piecesList = piecesList;
         vitesse = 0;
-        /*for (int i = 0; i < pieces.size(); i++) {
-            masseTout += pieces.get(i).getMasse();
-        }*/
-
-        masse = masseTout;
         thread = new Thread(this);
         thread.start();
     }
 
     @Override
     public void run() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ae -> {
+        NextGen nextGen = new NextGen();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), ae -> {
             if (tomber) {
                 vitesseVerticale += consAccel;
+
             } else {
-                NextGen nextGen = new NextGen();
-                nextGen.createTerrain();
-                vitesse += (consAccel * Math.sin(nextGen.getCinq().getRotate())) * -1;
-                vitesseHorizontale = (vitesse * Math.cos(nextGen.getCinq().getRotate())) * -1;
-                vitesseVerticale = (vitesse * Math.sin(nextGen.getCinq().getRotate())) * -1;
+
+                vitesse += (consAccel * Math.sin(nextGen.getCinq().getRotate()));
+                vitesseHorizontale = (vitesse * Math.cos(nextGen.getCinq().getRotate()));
+                vitesseVerticale = (vitesse * Math.sin(nextGen.getCinq().getRotate()));
             }
             vitesseVerticale = Math.min(vitesseMax, vitesseVerticale);
-
             transition(piecesList);
+
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -68,8 +62,8 @@ public class Carambolage implements Runnable {
     }
 
     public void transition(List<ImageView> piecesList) {
-        for (int i = 0; i < piecesList.size(); i++) {
-            TranslateTransition transition = new TranslateTransition(Duration.millis(500), piecesList.get(i));
+        for (ImageView imageView : piecesList) {
+            TranslateTransition transition = new TranslateTransition(Duration.millis(200), imageView);
             transition.setInterpolator(Interpolator.LINEAR);
             transition.setByY(vitesseVerticale);
             transition.setCycleCount(1);

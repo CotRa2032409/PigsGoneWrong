@@ -1,8 +1,8 @@
 package com.example.pigsgonewrong;
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NextGen {
@@ -14,17 +14,28 @@ public class NextGen {
     //Méthodes
     public NextGen() {
         cinq = new Rectangle(855, 520, 220, 5);
+        cinq.setRotate(15);
     }
 
-    public void createTerrain() {
-        cinq.setRotate(35);
-        cinq.setFill(Color.BLUE);
+    public List<Rectangle> dataminer(int niveau) {    //Reference à Binding of Isaac, crée les hitbox du sol
+        List<Rectangle> collision = new ArrayList<>();
 
-    }
+        switch (niveau) {
+            case 1: {
 
-    public List<Rectangle> dataminer() {    //Reference à Binding of Isaac, crée les hitbox du sol
+            }
+            case 2: {
 
-        return null;
+            }
+            case 3: {
+
+            }
+            default: {
+                System.err.println("Je pense tu devrais choisir un niveau... si tu veux jouer bien entendu");
+            }
+        }
+
+        return collision;
     }
 
     public Rectangle getCinq() {

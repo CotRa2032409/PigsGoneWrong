@@ -2,14 +2,11 @@ package com.example.pigsgonewrong;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class Pieces extends ImageView {
 
     //Attributs
     protected Carambolage carambolage;
-    private double masse;
     private double resistance;
     private boolean activable;
     private boolean conteneur;
@@ -25,56 +22,49 @@ public class Pieces extends ImageView {
     //Méthodes
     public void boiteBois() {
         setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
-        masse = 1.5;
-        resistance = 2;
+        setResistance(2);
         setConteneur(true);
         setContenu(false);
 
     }
 
     public void boiteFibre() {
-        Rectangle boiteFibre = new Rectangle(50, 50, 50, 50);
-        boiteFibre.setStrokeWidth(20);
-        boiteFibre.setStroke(Color.BLACK);
-        masse = 1;
-        resistance = 1;
+        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
+        setResistance(1);
         setConteneur(true);
+        setContenu(false);
     }
 
     public void boiteMetal() {
         setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
-        masse = 3;
-        resistance = 3;
+        setResistance(3);
         setConteneur(true);
+        setContenu(false);
     }
 
     public void cochon() {
         //Mettre imageView içi
         setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
-        masse = 0.5;
         setContenu(true);
         setConteneur(false);
     }
 
     public void roue() {
-
-        masse = 1;
-        resistance = 2;
+        setResistance(2);
+        setConteneur(false);
+        setContenu(false);
     }
 
     public void moteur() {
 
-        masse = 2.5;
-        activable = true;
-        contenu = true;
+        setActivable(true);
+        setContenu(true);
     }
 
-    public double getMasse() {
-        return masse;
-    }
-
-    public void setMasse(double masse) {
-        this.masse = masse;
+    public void reacteur() {
+        setResistance(2);
+        setActivable(true);
+        setContenu(false);
     }
 
     public double getResistance() {

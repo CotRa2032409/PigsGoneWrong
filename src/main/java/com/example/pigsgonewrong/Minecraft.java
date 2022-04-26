@@ -30,25 +30,25 @@ public class Minecraft extends Pieces implements Runnable {
         Node node1 = null;
         Node node2 = null;
 
-        //Java est cave!!
+        //Java est cave!! (Initialisation obligatoire des Integer, sinon Java est pas content) :(
         Integer colIndex1 = null;
         Integer rowIndex1 = null;
         Integer colIndex2 = null;
         Integer rowIndex2 = null;
         for (Integer i = 0; i < craftingTable.getChildren().size(); i++) {
-            if (i % 2 == 0) {
+            if (i % 2 == 0) { //Vérification de la node1
                 node1 = craftingTable.getChildren().get(i);
                 colIndex1 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
                 rowIndex1 = GridPane.getRowIndex(craftingTable.getChildren().get(i));
             } else if (node1 == null) {
                 node1 = craftingTable.getChildren().get(i);
             }
-            if (i % 2 != 0) {
+            if (i % 2 != 0) { //Vérification de la node2
                 node2 = craftingTable.getChildren().get(i);
                 colIndex2 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
                 rowIndex2 = GridPane.getRowIndex(craftingTable.getChildren().get(i));
             }
-            if (node1 != null && node2 != null) {
+            if (node1 != null && node2 != null) { //Vérification si une à côté de l'autre ou une au-dessus de l'autre
                 if (colIndex2.equals(colIndex1 + 1) && rowIndex2.equals(rowIndex1)) {
                     stickyPiston.getChildren().addAll(node1, node2);
                 } else if (rowIndex2.equals(rowIndex1 + 1) & colIndex2.equals(colIndex1)) {
@@ -61,7 +61,7 @@ public class Minecraft extends Pieces implements Runnable {
 
     public void pokeBall(Pieces piece1, Pieces piece2) { //Fonctionne plus ou moins comme une Pokeball (un conteneur contient un contenu)
         if ((piece1.isConteneur() && piece2.isContenu()) || (piece1.isContenu() && piece2.isConteneur())) {
-            setStickyPiston(new Group(piece1, piece2));
+            stickyPiston.getChildren().addAll(piece1, piece2);
         }
     }
 
@@ -74,7 +74,7 @@ public class Minecraft extends Pieces implements Runnable {
     public void run() {
         double comboBreaker = constanteResis * getResistance();
         if ((carambolage.getVitesseHorizontale() > comboBreaker) || (carambolage.getVitesseVerticale() > comboBreaker)) {
-            piecesCollees = false;
+            piecesCollees = false; //dies
         }
     }
 
@@ -180,5 +180,13 @@ public class Minecraft extends Pieces implements Runnable {
 
     public void setCraftingTable(GridPane craftingTable) {
         this.craftingTable = craftingTable;
+    }
+
+    public boolean isPiecesCollees() {
+        return piecesCollees;
+    }
+
+    public void setPiecesCollees(boolean piecesCollees) {
+        this.piecesCollees = piecesCollees;
     }
 }
