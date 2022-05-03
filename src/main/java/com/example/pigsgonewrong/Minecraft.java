@@ -10,11 +10,13 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Minecraft extends Pieces implements Runnable { //Gère la zone de construction du véhicule
 
     //Attributs
     private ArrayList<javafx.scene.Node> crafting;
+    private Menus menu = new Menus();
     private GridPane craftingTable;
     private final double constanteResis = 40;
     private boolean piecesCollees;
@@ -26,7 +28,8 @@ public class Minecraft extends Pieces implements Runnable { //Gère la zone de c
 
     //Méthodes
     public void coller() {
-        crafting.addAll(craftingTable.getChildren());
+
+        crafting.addAll(menu.getGridPaneObjet().getChildren());
         Node node1 = null;
         Node node2 = null;
 
@@ -35,18 +38,18 @@ public class Minecraft extends Pieces implements Runnable { //Gère la zone de c
         Integer rowIndex1 = null;
         Integer colIndex2 = null;
         Integer rowIndex2 = null;
-        for (int i = 0; i < craftingTable.getChildren().size(); i++) {
+        for (int i = 0; i < menu.getGridPaneObjet().getChildren().size(); i++) {
             if (i % 2 == 0) { //Vérification de la node1
-                node1 = craftingTable.getChildren().get(i);
-                colIndex1 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
-                rowIndex1 = GridPane.getRowIndex(craftingTable.getChildren().get(i));
+                node1 = menu.getGridPaneObjet().getChildren().get(i);
+                colIndex1 = GridPane.getColumnIndex(menu.getGridPaneObjet().getChildren().get(i));
+                rowIndex1 = GridPane.getRowIndex(menu.getGridPaneObjet().getChildren().get(i));
             } else if (node1 == null) {
-                node1 = craftingTable.getChildren().get(i);
+                node1 = menu.getGridPaneObjet().getChildren().get(i);
             }
             if (i % 2 != 0) { //Vérification de la node2
-                node2 = craftingTable.getChildren().get(i);
-                colIndex2 = GridPane.getColumnIndex(craftingTable.getChildren().get(i));
-                rowIndex2 = GridPane.getRowIndex(craftingTable.getChildren().get(i));
+                node2 = menu.getGridPaneObjet().getChildren().get(i);
+                colIndex2 = GridPane.getColumnIndex(menu.getGridPaneObjet().getChildren().get(i));
+                rowIndex2 = GridPane.getRowIndex(menu.getGridPaneObjet().getChildren().get(i));
             }
             if (node1 != null && node2 != null) { //Vérification si une à côté de l'autre ou une au-dessus de l'autre
                 if (colIndex2.equals(colIndex1 + 1) && rowIndex2.equals(rowIndex1)) {
@@ -56,13 +59,17 @@ public class Minecraft extends Pieces implements Runnable { //Gère la zone de c
                 }
             }
         }
-        piecesCollees = true; //Ready to go!
+        setPiecesCollees(true); //Ready to go!
     }
 
     public void pokeBall(Pieces piece1, Pieces piece2) { //Fonctionne plus ou moins comme une Pokeball (un conteneur contient un contenu)
         if ((piece1.isConteneur() && piece2.isContenu()) || (piece1.isContenu() && piece2.isConteneur())) {
             stickyPiston.getChildren().addAll(piece1, piece2);
+
+            System.err.println("COLLEES");
         }
+        /*else if (Objects.equals(piece1.getImage(), new ImageView("file:Nothing.png")) || Objects.equals(piece2.getImage(), new ImageView("file:Nothing.png"))) {
+        }*/
     }
 
     public void breakingBad() { //Destruction du véhicule
@@ -74,7 +81,7 @@ public class Minecraft extends Pieces implements Runnable { //Gère la zone de c
     public void run() {
         double comboBreaker = constanteResis * getResistance();
         if ((carambolage.getVitesseHorizontale() > comboBreaker) || (carambolage.getVitesseVerticale() > comboBreaker)) {
-            piecesCollees = false; //dies
+            setPiecesCollees(false); //dies
         }
     }
 

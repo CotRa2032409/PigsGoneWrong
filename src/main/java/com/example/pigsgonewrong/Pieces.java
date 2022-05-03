@@ -21,7 +21,7 @@ public class Pieces extends ImageView {
 
     //Méthodes
     public void boiteBois() {
-        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
+        setImage(new Image("file:BoiteBois.png"));
         setResistance(2);
         setConteneur(true);
         setContenu(false);
@@ -29,14 +29,14 @@ public class Pieces extends ImageView {
     }
 
     public void boiteFibre() {
-        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
+        setImage(new Image("file:BoiteCarbone.png"));
         setResistance(1);
         setConteneur(true);
         setContenu(false);
     }
 
     public void boiteMetal() {
-        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
+        setImage(new Image("file:BoiteMetal.png"));
         setResistance(3);
         setConteneur(true);
         setContenu(false);
@@ -44,19 +44,21 @@ public class Pieces extends ImageView {
 
     public void cochon() {
         //Mettre imageView içi
-        setImage(new Image("file:SnowRunner Screenshot 2022.01.24 - 13.40.32.45.png"));
+        setImage(new Image("file:Cochon.png"));
         setContenu(true);
         setConteneur(false);
+
     }
 
     public void roue() {
+        setImage(new Image("file:Roue.png"));
         setResistance(2);
         setConteneur(false);
         setContenu(false);
     }
 
     public void moteur() {
-
+        setImage(new Image("file:Moteur.png"));
         setActivable(true);
         setContenu(true);
     }

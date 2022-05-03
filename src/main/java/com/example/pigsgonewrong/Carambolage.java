@@ -46,9 +46,9 @@ public class Carambolage implements Runnable {
                 vitesseVerticale += consAccel;
 
             } else {
-                vitesse += (consAccel * Math.sin(nextGen.getCinq().getRotate()));
+                /*vitesse += (consAccel * Math.sin(nextGen..getRotate()));
                 vitesseHorizontale = (vitesse * Math.cos(nextGen.getCinq().getRotate()));
-                vitesseVerticale = (vitesse * Math.sin(nextGen.getCinq().getRotate()));
+                vitesseVerticale = (vitesse * Math.sin(nextGen.getCinq().getRotate()));*/
             }
             vitesseVerticale = Math.min(vitesseMax, vitesseVerticale);
             transition(piecesList);
