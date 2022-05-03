@@ -1,15 +1,11 @@
 package com.example.pigsgonewrong;
 
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Game extends Application implements Runnable {
 
@@ -17,10 +13,12 @@ public class Game extends Application implements Runnable {
     private static Thread thread;
     private static boolean running = false;
     protected NextGen nextGen;
-    private int niveau; //1, 2 ou 3
+    private static Stage stage;
+    public Menus menu = new Menus();
 
 
     public synchronized void start(Stage stage) throws IOException {
+        this.stage = stage;
         stage.setMaximized(true);
         stage.setTitle("Bad Piggies 3 Lite");
         stage.setResizable(false);
@@ -31,32 +29,14 @@ public class Game extends Application implements Runnable {
         thread = new Thread(this);
         thread.start();
 
-        List<ImageView> allo = new ArrayList<>();
         nextGen = new NextGen();
 
-        Pieces piece = new Pieces();
-        piece.cochon();
-        allo.add(piece);
-        Pieces piece2 = new Pieces();
-        piece2.boiteBois();
 
 
-        Minecraft collePieces = new Minecraft();
-        collePieces.pokeBall(piece, piece2);
 
-        gravity.setTomber(false);
-
-        GridPane gridPane = new GridPane();
-        gridPane.add(allo.get(0), 0, 0);
-        Group root = new Group(gridPane);
-        piece.setScaleX(0.2);
-        piece.setScaleY(0.2);
-
-        gravity.addToList(piece);
-        gravity.addToList(piece2);
         gravity.calculVitesse(gravity.getPiecesList());
 
-        Scene scene = new Scene(root);
+        Scene scene = menu.mainMenu();
 
         stage.setScene(scene);
         stage.show();
@@ -92,6 +72,15 @@ public class Game extends Application implements Runnable {
 
     public static void main(String[] args) {
         launch();
+
+    }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }
 
