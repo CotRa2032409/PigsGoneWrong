@@ -28,7 +28,7 @@ public class Pieces extends ImageView {
 
     }
 
-    public void boiteFibre() {
+    public void boiteCarbone() {
         setImage(new Image("file:BoiteCarbone.png"));
         setResistance(1);
         setConteneur(true);

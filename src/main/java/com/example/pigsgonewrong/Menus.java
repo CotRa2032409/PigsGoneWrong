@@ -1,6 +1,7 @@
 package com.example.pigsgonewrong;
 
-import javafx.animation.*;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -26,11 +27,13 @@ public class Menus {
     //Attributs
     private Scene menuPrincipal = null;
     private NextGen nextGen = new NextGen();
-    private Game game;
-    private GridPane gridPaneObjet;
+    private GridPane gridPaneObjet = new GridPane();
+    private ArrayList<Pieces> arrayListObjet = new ArrayList<>();
     private Minecraft minecraft;
+
     //Méthodes
     public Scene mainMenu() {
+
         ImageView titre = new ImageView("file:Titre.png");
         Button bouton1 = new Button("");
         bouton1.setGraphic(new ImageView("file:Button1.png"));
@@ -62,21 +65,21 @@ public class Menus {
     }
 
     public Scene level1() {
-        Group groupeNiveau1 = new Group(new ImageView("file:Background1.png"), new ImageView("file:Level1.png"), nextGen.collision1(), gridpane(), boutonsEtGoal(), retour());
+        Group groupeNiveau1 = new Group(new ImageView("file:Background1.png"), new ImageView("file:Level1.png"), nextGen.collision1(), gridPane(), goal(), retour(), play1());
         return new Scene(groupeNiveau1);
     }
 
     public Scene level2() {
-        Group groupeNiveau2 = new Group(new ImageView("file:Background2.png"), new ImageView("file:Level2.png"), nextGen.collision2(), gridpane(), boutonsEtGoal(), retour());
+        Group groupeNiveau2 = new Group(new ImageView("file:Background2.png"), new ImageView("file:Level2.png"), nextGen.collision2(), gridPane(), goal(), retour(), play2());
         return new Scene(groupeNiveau2);
     }
 
     public Scene level3() {
-        Group groupeNiveau3 = new Group(new ImageView("file:Background3.png"), new ImageView("file:Level3.png"), nextGen.collision3(), gridpane(), boutonsEtGoal(), retour());
+        Group groupeNiveau3 = new Group(new ImageView("file:Background3.png"), new ImageView("file:Level3.png"), nextGen.collision3(), gridPane(), goal(), retour(), play3());
         return new Scene(groupeNiveau3);
     }
 
-    public Group gridpane() {
+    public Group gridPane() {
         BorderPane borderPane = new BorderPane();
 
         ImageView image0 = new ImageView("file:Case.png");
@@ -144,7 +147,7 @@ public class Menus {
         Pieces image8Objet = new Pieces("file:Nothing.png");
 
         Pieces objetInventaire1 = new Pieces();
-        objetInventaire1.boiteFibre();
+        objetInventaire1.boiteCarbone();
         Pieces objetInventaire2 = new Pieces();
         objetInventaire2.boiteBois();
         Pieces objetInventaire3 = new Pieces();
@@ -164,7 +167,6 @@ public class Menus {
         inventoryItems.add(objetInventaire5);
         inventoryItems.add(objetInventaire6);
 
-        gridPaneObjet = new GridPane();
         gridPaneObjet.add(image0Objet, 0, 0);
         gridPaneObjet.add(image1Objet, 0, 1);
         gridPaneObjet.add(image2Objet, 0, 2);
@@ -176,8 +178,8 @@ public class Menus {
         gridPaneObjet.add(image8Objet, 2, 2);
         borderPane.setCenter(gridPaneObjet);
         gridPaneObjet.setAlignment(Pos.CENTER);
+        gridPaneObjet.setTranslateX(75);
 
-        ArrayList<Pieces> arrayListObjet = new ArrayList<>();
 
         arrayListObjet.add(image0Objet);
         arrayListObjet.add(image1Objet);
@@ -225,23 +227,47 @@ public class Menus {
                 dragboard.setContent(content);
             });
             temp.setOnDragOver((ae) -> {
-                ae.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                ae.acceptTransferModes(TransferMode.MOVE);
             });
             temp.setOnDragDropped(ae -> {
                 Pieces source = (Pieces) ae.getGestureSource();
                 Pieces target = (Pieces) ae.getGestureTarget();
-                Image imageSource = source.getImage();
 
-                if (Objects.equals(temp.getImage(), target.getImage())) {
-                    temp.setImage(imageSource);
+                switch (source.getImage().getUrl()) {
+                    case "file:Cochon.png" -> source.cochon();
+                    case "file:BoiteMetal.png" -> source.boiteMetal();
+                    case "file:BoiteBois.png" -> source.boiteBois();
+                    case "file:BoiteCarbone.png" -> source.boiteCarbone();
+                    case "file:Roue.png" -> source.roue();
+                    case "file:Moteur.png" -> source.moteur();
                 }
-                if (target.isConteneur())
-                    minecraft.pokeBall(target, source);
-                System.err.println(minecraft.getStickyPiston().getChildren());
+                switch (target.getImage().getUrl()) {
+                    case "file:Cochon.png" -> target.cochon();
+                    case "file:BoiteMetal.png" -> target.boiteMetal();
+                    case "file:BoiteBois.png" -> target.boiteBois();
+                    case "file:BoiteCarbone.png" -> target.boiteCarbone();
+                    case "file:Roue.png" -> target.roue();
+                    case "file:Moteur.png" -> target.moteur();
+                }
+                System.err.println(target.getImage().getUrl());
+                System.err.println(source.getImage().getUrl());
+                Image imageSource = source.getImage();
+                if (Objects.equals(temp.getImage(), target.getImage())) {
+                    if (target.isConteneur())
+                        temp.setImage(minecraft.pokeBall(target, source));
+                    else
+                        temp.setImage(imageSource);
+                }
                 System.out.println("Drag and drop Objet");
                 ae.setDropCompleted(true);
+
             });
+            temp.setOnScroll(ae -> {
+                temp.setImage(new Image("file:Nothing.png"));
+            });
+
         }
+
         return vBox;
     }
 
@@ -252,8 +278,7 @@ public class Menus {
         play.setTranslateX(1300);
         play.setTranslateY(200);
         play.setOnAction((event) -> {
-            minecraft.coller();
-
+            Game.getStage().setScene(level1Jouer());
         });
         return play;
     }
@@ -300,6 +325,7 @@ public class Menus {
     }
 
     public Group backgroundMainMenu() {
+
         ImageView arriere3 = new ImageView("file:Background3.png");
         arriere3.setScaleX(2);
         arriere3.setScaleY(2);
@@ -310,48 +336,12 @@ public class Menus {
         arriere1.setScaleX(2);
         arriere1.setScaleY(2);
 
-        FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(3), arriere1);
-        FadeTransition fadeTransition2 = new FadeTransition(Duration.seconds(3), arriere2);
-        FadeTransition fadeTransition3 = new FadeTransition(Duration.seconds(3), arriere3);
-
-        TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(3), arriere1);
-        translateTransition1.setByX(500);
-        Timeline timeline1 = new Timeline(new KeyFrame(Duration.seconds(3), actionEvent -> {
-            fadeTransition1.setFromValue(1);
-            fadeTransition1.setToValue(0);
-            fadeTransition1.play();
-        }));
-        timeline1.play();
-
-        TranslateTransition translateTransition2 = new TranslateTransition(Duration.seconds(3), arriere2);
-        translateTransition2.setByY(500);
-        Timeline timeline2 = new Timeline(new KeyFrame(Duration.seconds(6), actionEvent -> {
-            fadeTransition2.setFromValue(1);
-            fadeTransition2.setToValue(0);
-            fadeTransition2.play();
-        }));
-        timeline2.play();
-
-        TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(3), arriere3);
-        translateTransition3.setByX(-500);
-        Timeline timeline3 = new Timeline(new KeyFrame(Duration.seconds(9), actionEvent -> {
-            fadeTransition3.setFromValue(1);
-            fadeTransition3.setToValue(0);
-            fadeTransition3.play();
-        }));
-        timeline3.play();
-
-        SequentialTransition sequentialTransition = new SequentialTransition(translateTransition1, translateTransition2, translateTransition3);
-        sequentialTransition.setCycleCount(Timeline.INDEFINITE);
-        sequentialTransition.play();
-
         return new Group(arriere1, arriere2, arriere3);
     }
 
     public void activePiece() {
 
     }
-
 
     public GridPane getGridPaneObjet() {
         return gridPaneObjet;
@@ -360,5 +350,14 @@ public class Menus {
     public void setGridPaneObjet(GridPane gridPaneObjet) {
         this.gridPaneObjet = gridPaneObjet;
     }
+
+    public ArrayList<Pieces> getArrayListObjet() {
+        return arrayListObjet;
+    }
+
+    public void setArrayListObjet(ArrayList<Pieces> arrayListObjet) {
+        this.arrayListObjet = arrayListObjet;
+    }
+
 }
 

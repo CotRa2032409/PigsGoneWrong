@@ -185,8 +185,11 @@ public class NextGen {
         ll.setRotate(0);
         ll.setFill(Color.ORANGE);
 
-
-        return new Group(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll);
+        Group group = new Group(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll);
+        for (int xi = 0; xi < group.getChildren().size(); xi++) {
+            group.getChildren().get(xi).setOpacity(0);
+        }
+        return group;
     }
 
     public Group collision2() {
@@ -297,8 +300,11 @@ public class NextGen {
         Rectangle mmm = new Rectangle(1460, 775, 100, 5);
         mmm.setRotate(5);
         mmm.setFill(Color.YELLOW);
-
-        return new Group(mm, nn, oo, pp, qq, rr, ss, tt, uu, vv, ww, xx, yy, zz, aaa, bbb, ccc, ddd, eee, fff, ggg, hhh, iii, jjj, kkk, lll, mmm);
+        Group group = new Group(mm, nn, oo, pp, qq, rr, ss, tt, uu, vv, ww, xx, yy, zz, aaa, bbb, ccc, ddd, eee, fff, ggg, hhh, iii, jjj, kkk, lll, mmm);
+        for (int i = 0; i < group.getChildren().size(); i++) {
+            group.getChildren().get(i).setOpacity(0);
+        }
+        return group;
     }
 
     public Group collision3() {
@@ -494,8 +500,11 @@ public class NextGen {
         Rectangle iiiii = new Rectangle(1200, 645, 70, 5);
         iiiii.setRotate(5);
         iiiii.setFill(Color.PURPLE);
-
-        return new Group(nnn, ooo, ppp, qqq, rrr, sss, ttt, uuu, vvv, www, xxx, yyy, zzz, aaaa, bbbb, cccc, dddd, eeee, ffff, gggg, hhhh, iiii, jjjj, kkkk, llll, mmmm, nnnn, oooo, pppp, qqqq, rrrr, ssss, tttt, uuuu, vvvv, wwww, xxxx, yyyy, zzzz, aaaaa, bbbbb, ccccc, ddddd, eeeee, fffff, ggggg, hhhhh, iiiii);
+        Group group = new Group(nnn, ooo, ppp, qqq, rrr, sss, ttt, uuu, vvv, www, xxx, yyy, zzz, aaaa, bbbb, cccc, dddd, eeee, ffff, gggg, hhhh, iiii, jjjj, kkkk, llll, mmmm, nnnn, oooo, pppp, qqqq, rrrr, ssss, tttt, uuuu, vvvv, wwww, xxxx, yyyy, zzzz, aaaaa, bbbbb, ccccc, ddddd, eeeee, fffff, ggggg, hhhhh, iiiii);
+        for (int i = 0; i < group.getChildren().size(); i++) {
+            group.getChildren().get(i).setOpacity(1);
+        }
+        return group;
 
     }
 }

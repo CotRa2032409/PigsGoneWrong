@@ -15,21 +15,41 @@ import java.util.Objects;
 public class Minecraft extends Pieces implements Runnable { //Gère la zone de construction du véhicule
 
     //Attributs
-    private ArrayList<javafx.scene.Node> crafting;
-    private Menus menu = new Menus();
+    private ArrayList<javafx.scene.Node> crafting = new ArrayList<>();
+    private Menus menu;
     private GridPane craftingTable;
     private final double constanteResis = 40;
     private boolean piecesCollees;
-    private Group stickyPiston = new Group();
+    private Group stickyPiston;
+    private Pieces everything;
 
     public Minecraft() {
         super();
+        everything = new Pieces();
+        stickyPiston = new Group();
+        menu = new Menus();
     }
 
     //Méthodes
-    public void coller() {
+    public Group coller() {
+        for (int i = 0; i < menu.getArrayListObjet().size(); i++) {
 
-        crafting.addAll(menu.getGridPaneObjet().getChildren());
+            if (!Objects.equals(menu.getArrayListObjet().get(i - 1).getImage().getUrl(), "file:Nothing.png")) {
+                stickyPiston.getChildren().addAll(menu.getArrayListObjet().get(i - 1), menu.getArrayListObjet().get(i));
+            }
+
+            if (!Objects.equals(menu.getArrayListObjet().get(i + 1).getImage().getUrl(), "file:Nothing.png")) {
+                stickyPiston.getChildren().add(menu.getArrayListObjet().get(i + 1));
+            }
+            if (!Objects.equals(menu.getArrayListObjet().get(i + 3).getImage().getUrl(), "file:Nothing.png")) {
+                stickyPiston.getChildren().add(menu.getArrayListObjet().get(i + 3));
+            }
+        }
+
+        for (int i = 0; i < stickyPiston.getChildren().size(); i++) {
+            System.err.println(stickyPiston.getChildren().get(i).getId());
+        }
+        /*
         Node node1 = null;
         Node node2 = null;
 
@@ -39,37 +59,53 @@ public class Minecraft extends Pieces implements Runnable { //Gère la zone de c
         Integer colIndex2 = null;
         Integer rowIndex2 = null;
         for (int i = 0; i < menu.getGridPaneObjet().getChildren().size(); i++) {
-            if (i % 2 == 0) { //Vérification de la node1
+            if (i % 2 == 0) { //Verification de la node1
                 node1 = menu.getGridPaneObjet().getChildren().get(i);
                 colIndex1 = GridPane.getColumnIndex(menu.getGridPaneObjet().getChildren().get(i));
                 rowIndex1 = GridPane.getRowIndex(menu.getGridPaneObjet().getChildren().get(i));
             } else if (node1 == null) {
                 node1 = menu.getGridPaneObjet().getChildren().get(i);
             }
-            if (i % 2 != 0) { //Vérification de la node2
+            if (i % 2 != 0) { //Verification de la node2
                 node2 = menu.getGridPaneObjet().getChildren().get(i);
                 colIndex2 = GridPane.getColumnIndex(menu.getGridPaneObjet().getChildren().get(i));
                 rowIndex2 = GridPane.getRowIndex(menu.getGridPaneObjet().getChildren().get(i));
             }
-            if (node1 != null && node2 != null) { //Vérification si une à côté de l'autre ou une au-dessus de l'autre
+            if (node1 != null && node2 != null) { //Verification si une a cote de l'autre ou une au-dessus de l'autre
                 if (colIndex2.equals(colIndex1 + 1) && rowIndex2.equals(rowIndex1)) {
                     stickyPiston.getChildren().addAll(node1, node2);
                 } else if (rowIndex2.equals(rowIndex1 + 1) & colIndex2.equals(colIndex1)) {
                     stickyPiston.getChildren().addAll(node1, node2);
                 }
             }
-        }
+        }*/
         setPiecesCollees(true); //Ready to go!
+        return stickyPiston;
     }
 
-    public void pokeBall(Pieces piece1, Pieces piece2) { //Fonctionne plus ou moins comme une Pokeball (un conteneur contient un contenu)
-        if ((piece1.isConteneur() && piece2.isContenu()) || (piece1.isContenu() && piece2.isConteneur())) {
-            stickyPiston.getChildren().addAll(piece1, piece2);
-
-            System.err.println("COLLEES");
+    public Image pokeBall(Pieces piece1, Pieces piece2) { //Fonctionne plus ou moins comme une Poke ball (un conteneur contient un contenu)
+        if (piece1.isConteneur() && piece2.isContenu()) {
+            System.err.println(piece1.getImage().getUrl());
+            if (Objects.equals(piece1.getImage().getUrl(), "file:BoiteBois.png")) {
+                if (Objects.equals(piece2.getImage().getUrl(), "file:Cochon.png"))
+                    return new Image("file:PigBoiteBois.png");
+                if (Objects.equals(piece2.getImage().getUrl(), "file:Moteur.png"))
+                    return new Image("file:MoteurBoiteBois.png");
+            }
+            if (Objects.equals(piece1.getImage().getUrl(), "file:BoiteMetal.png")) {
+                if (Objects.equals(piece2.getImage().getUrl(), "file:Cochon.png"))
+                    return new Image("file:PigBoiteMetal.png");
+                if (Objects.equals(piece2.getImage().getUrl(), "file:Moteur.png"))
+                    return new Image("file:MoteurBoiteMetal.png");
+            }
+            if (Objects.equals(piece1.getImage().getUrl(), "file:BoiteCarbone.png")) {
+                if (Objects.equals(piece2.getImage().getUrl(), "file:Cochon.png"))
+                    return new Image("file:PigBoiteCarbone.png");
+                if (Objects.equals(piece2.getImage().getUrl(), "file:Moteur.png"))
+                    return new Image("file:MoteurBoiteCarbone.png");
+            }
         }
-        /*else if (Objects.equals(piece1.getImage(), new ImageView("file:Nothing.png")) || Objects.equals(piece2.getImage(), new ImageView("file:Nothing.png"))) {
-        }*/
+        return null;
     }
 
     public void breakingBad() { //Destruction du véhicule
@@ -193,5 +229,13 @@ public class Minecraft extends Pieces implements Runnable { //Gère la zone de c
 
     public void setPiecesCollees(boolean piecesCollees) {
         this.piecesCollees = piecesCollees;
+    }
+
+    public Pieces getEverything() {
+        return everything;
+    }
+
+    public void setEverything(Pieces everything) {
+        this.everything = everything;
     }
 }
